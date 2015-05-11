@@ -7,7 +7,7 @@ Package Description
 -------------------
 ripdb is a wrapper around the IPython debugger that enables one to connect to
 and control the debugger remotely via a socket handler. It combines
-the functionality of `ipdb <https://github.com/gotcha/ipdb>`_ `rpdb
+the functionality of `ipdb <https://github.com/gotcha/ipdb>`_ and `rpdb
 <https://github.com/tamentis/rpdb>`_ in a single package.
 
 Usage
