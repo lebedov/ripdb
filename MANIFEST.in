@@ -1,0 +1,3 @@
+exclude MANIFEST.in
+include *.rst *.txt
+rpdb
