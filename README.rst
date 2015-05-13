@@ -10,6 +10,10 @@ and control the debugger remotely via a socket handler. It combines
 the functionality of `ipdb <https://github.com/gotcha/ipdb>`_ and `rpdb
 <https://github.com/tamentis/rpdb>`_ in a single package.
 
+.. image:: https://img.shields.io/pypi/v/ripdb.svg
+    :target: https://pypi.python.org/pypi/ripdb
+    :alt: Latest Version
+
 Usage
 -----
 After installation, include the following in your code: ::
@@ -25,6 +29,11 @@ instantiate the debugger as follows: ::
   debugger.set_trace()
 
 Connect to the debugger using a telnet client.
+
+Development
+-----------
+The latest release of the package may be obtained from
+`GitHub <tthps://github.com/lebedov/ripdb>`_.
 
 Authors
 -------
