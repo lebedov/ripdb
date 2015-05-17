@@ -25,8 +25,7 @@ This will start the debugger on port 4444 by default; to use a different port
 instantiate the debugger as follows: ::
 
   import ripdb
-  debugger = ripdb.Rpdb(port=12345)
-  debugger.set_trace()
+  debugger.set_trace(port=12345)
 
 Connect to the debugger using a telnet client.
 
