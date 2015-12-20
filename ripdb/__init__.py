@@ -7,9 +7,12 @@ __version__ = "0.1.0"
 
 import IPython.core.debugger as pdb
 from IPython.utils import io
+import multiprocessing
+import os
+import pty
 import socket
-import threading
 import sys
+import threading
 import traceback
 
 try:
@@ -21,20 +24,6 @@ except NameError:
     def_colors = ipshell.colors
 else:
     def_colors = get_ipython.im_self.colors
-
-class FileObjectWrapper(object):
-    def __init__(self, fileobject, stdio):
-        self._obj = fileobject
-        self._io = stdio
-
-    def __getattr__(self, attr):
-        if hasattr(self._obj, attr):
-            attr = getattr(self._obj, attr)
-        elif hasattr(self._io, attr):
-            attr = getattr(self._io, attr)
-        else:
-            raise AttributeError("Attribute %s is not found" % attr)
-        return attr
 
 
 class Rpdb(pdb.Pdb):
@@ -65,11 +54,9 @@ class Rpdb(pdb.Pdb):
             sys.excepthook = pdb.BdbQuit_excepthook
 
         (clientsocket, address) = self.skt.accept()
-        handle = clientsocket.makefile('rw')
-        pdb.Pdb.__init__(self, def_colors, completekey='tab',
-                         stdin=FileObjectWrapper(handle, self.old_stdin),
-                         stdout=FileObjectWrapper(handle, self.old_stdin))
+        handle = connect_to_pty(clientsocket.makefile('r+', 0))
         io.stdout = sys.stdout = sys.stdin = handle
+        pdb.Pdb.__init__(self, def_colors)
         OCCUPIED.claim(port, sys.stdout)
 
     def shutdown(self):
@@ -104,6 +91,30 @@ class Rpdb(pdb.Pdb):
             return pdb.Pdb.do_EOF(self, arg)
         finally:
             self.shutdown()
+
+
+def copy_worker(file_from, file_to):
+    while True:
+        c = file_from.read(1)
+        if not c:
+            break
+        file_to.write(c)
+
+
+def connect_to_pty(sock):
+    ptym_fd, ptys_fd = pty.openpty()
+    ptym = os.fdopen(ptym_fd, 'r+', 0)
+    ptys = os.fdopen(ptys_fd, 'r+', 0)
+    # Setup two processes for copying between socket and master pty.
+    sock_to_ptym = multiprocessing.Process(target=copy_worker,
+                                           args=(sock, ptym))
+    sock_to_ptym.daemon = True
+    sock_to_ptym.start()
+    ptym_to_sock = multiprocessing.Process(target=copy_worker,
+                                           args=(ptym, sock))
+    ptym_to_sock.daemon = True
+    ptym_to_sock.start()
+    return ptys
 
 
 def set_trace(addr="127.0.0.1", port=4444):

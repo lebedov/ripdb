@@ -27,7 +27,12 @@ instantiate the debugger as follows: ::
   import ripdb
   debugger.set_trace(port=12345)
 
-Connect to the debugger using a telnet client.
+Connect to the debugger using telnet, netcat, or socat. If you want to enable 
+line completion and editting, you need to disable several terminal features 
+before connecting: ::
+
+  SAVED_STTY=`stty -g`; stty -icanon -opost -echo -echoe -echok -echoctl 
+  -echoke; nc 127.0.0.1 4444; stty $SAVED_STTY
 
 Development
 -----------
