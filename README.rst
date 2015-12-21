@@ -28,7 +28,7 @@ instantiate the debugger as follows: ::
   debugger.set_trace(port=12345)
 
 Connect to the debugger using telnet, netcat, or socat. If you want to enable 
-line completion and editting, you need to disable several terminal features 
+line completion and editing, you need to disable several terminal features 
 before connecting: ::
 
   SAVED_STTY=`stty -g`; stty -icanon -opost -echo -echoe -echok -echoctl 
