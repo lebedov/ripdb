@@ -3,7 +3,7 @@ Remote IPython Debugger (ipdb wrapper).
 """
 
 __author__ = "Lev Givon"
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 
 import IPython.core.debugger as pdb
 from IPython.utils import io
