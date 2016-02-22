@@ -41,10 +41,14 @@ The latest release of the package may be obtained from
 
 Authors
 -------
-See the included AUTHORS.rst file for more information.
+See the included `AUTHORS`_ file for more information.
+
+.. _AUTHORS: AUTHORS.rst
 
 License
 -------
 This software is licensed under the 
-`GNU General Public License, version 2 <https://www.gnu.org/licenses/gpl-2.0.html>`_.
-See the included LICENSE.rst file for more information.
+`BSD License <http://www.opensource.org/licenses/bsd-license.php>`_.
+See the included `LICENSE`_ file for more information.
+
+.. _LICENSE: LICENSE.rst

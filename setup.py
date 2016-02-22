@@ -13,20 +13,20 @@ from setuptools import find_packages
 from setuptools import setup
 
 NAME =               'ripdb'
-VERSION =            '0.1.1'
+VERSION =            '0.1.2'
 AUTHOR =             'Lev Givon'
 AUTHOR_EMAIL =       'lev@columbia.edu'
 URL =                'https://github.com/lebedov/ripdb/'
 DESCRIPTION =        'Remotely accessible IPython-enabled debugger'
 LONG_DESCRIPTION =   DESCRIPTION
 DOWNLOAD_URL =       URL
-LICENSE =            'GPLv2'
+LICENSE =            'BSD'
 CLASSIFIERS = [
     'Development Status :: 3 - Alpha',
     'Environment :: Console',
     'Framework :: IPython',
     'Intended Audience :: Developers',
-    'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
+    'License :: OSI Approved :: BSD License',
     'Operating System :: OS Independent',
     'Programming Language :: Python',
     'Topic :: Software Development']
