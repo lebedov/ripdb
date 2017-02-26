@@ -41,14 +41,13 @@ The latest release of the package may be obtained from
 
 Authors
 -------
-See the included `AUTHORS`_ file for more information.
-
-.. _AUTHORS: AUTHORS.rst
+See the included `AUTHORS
+<https://github.com/lebedov/ripdb/blob/master/AUTHORS.rst>`_ file for more
+information.
 
 License
 -------
-This software is licensed under the 
-`BSD License <http://www.opensource.org/licenses/bsd-license.php>`_.
-See the included `LICENSE`_ file for more information.
-
-.. _LICENSE: LICENSE.rst
+This software is licensed under the `BSD License
+<http://www.opensource.org/licenses/bsd-license.php>`_.  See the included
+`LICENSE <https://github.com/lebedov/ripdb/blob/master/LICENSE.rst>`_ file for
+more information.
