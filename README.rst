@@ -25,7 +25,7 @@ This will start the debugger on port 4444 by default; to use a different port
 instantiate the debugger as follows: ::
 
   import ripdb
-  debugger.set_trace(port=12345)
+  ripdb.set_trace(port=12345)
 
 Connect to the debugger using telnet, netcat, or socat. If you want to enable 
 line completion and editing, you need to disable several terminal features 
