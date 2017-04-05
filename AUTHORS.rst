@@ -2,7 +2,7 @@
 
 Authors & Acknowledgements
 ==========================
-This software was written by Lev Givon using code from the following two
+This software was written by Lev E. Givon using code from the following two
 projects:
 
 * `ipdb <https://github.com/gotcha/ipdb>`_, by Godefroid Chapelle

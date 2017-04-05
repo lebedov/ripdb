@@ -7,8 +7,8 @@ from setuptools import find_packages
 from setuptools import setup
 
 NAME =               'ripdb'
-VERSION =            '0.1.2'
-AUTHOR =             'Lev Givon'
+VERSION =            '0.1.3'
+AUTHOR =             'Lev E. Givon'
 AUTHOR_EMAIL =       'lev@columbia.edu'
 URL =                'https://github.com/lebedov/ripdb/'
 DESCRIPTION =        'Remotely accessible IPython-enabled debugger'
@@ -43,5 +43,6 @@ if __name__ == "__main__":
         long_description = LONG_DESCRIPTION,
         url = URL,
         packages = find_packages(),
-        install_requires = ['ipython>=3.0'],
+        install_requires = ['ipython>=3.0',
+                            'six'],
     )

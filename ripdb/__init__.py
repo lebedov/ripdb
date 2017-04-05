@@ -2,11 +2,9 @@
 Remote IPython Debugger (ipdb wrapper).
 """
 
-__author__ = "Lev Givon"
-__version__ = "0.1.2"
+__author__ = "Lev E. Givon"
+__version__ = "0.1.3"
 
-import IPython.core.debugger as pdb
-from IPython.utils import io
 import multiprocessing
 import os
 import pty
@@ -14,6 +12,10 @@ import socket
 import sys
 import threading
 import traceback
+
+import IPython.core.debugger as pdb
+from IPython.utils import io
+import six
 
 try:
     get_ipython
@@ -54,7 +56,10 @@ class Rpdb(pdb.Pdb):
             sys.excepthook = pdb.BdbQuit_excepthook
 
         (clientsocket, address) = self.skt.accept()
-        handle = connect_to_pty(clientsocket.makefile('r+', 0))
+        if six.PY3:
+            handle = connect_to_pty(clientsocket.makefile('rw', None))
+        else:
+            handle = connect_to_pty(clientsocket.makefile('r+', 0))           
         io.stdout = sys.stdout = sys.stdin = handle
         pdb.Pdb.__init__(self, def_colors)
         OCCUPIED.claim(port, sys.stdout)
@@ -99,12 +104,21 @@ def copy_worker(file_from, file_to):
         if not c:
             break
         file_to.write(c)
-
+        if six.PY3:
+            file_to.flush()
 
 def connect_to_pty(sock):
     ptym_fd, ptys_fd = pty.openpty()
-    ptym = os.fdopen(ptym_fd, 'r+', 0)
-    ptys = os.fdopen(ptys_fd, 'r+', 0)
+    if six.PY3:
+        import io
+        _ptym = os.fdopen(ptym_fd, 'r+b', 0)
+        ptym = io.TextIOWrapper(_ptym, write_through=True)
+        _ptys = os.fdopen(ptys_fd, 'r+b', 0)
+        ptys = io.TextIOWrapper(_ptys, write_through=True)
+    else:
+        ptym = os.fdopen(ptym_fd, 'r+', 0)
+        ptys = os.fdopen(ptys_fd, 'r+', 0)
+
     # Setup two processes for copying between socket and master pty.
     sock_to_ptym = multiprocessing.Process(target=copy_worker,
                                            args=(sock, ptym))
