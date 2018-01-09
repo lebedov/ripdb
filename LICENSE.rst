@@ -2,7 +2,7 @@
 
 License
 =======
-Copyright (c) 2015-2017 Lev E. Givon, Godefroid Chapelle, Bertrand Janin
+Copyright (c) 2015-2018 Lev E. Givon, Godefroid Chapelle, Bertrand Janin
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
