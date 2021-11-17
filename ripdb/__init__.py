@@ -25,7 +25,10 @@ except NameError:
     ipshell = InteractiveShellEmbed()
     def_colors = ipshell.colors
 else:
-    def_colors = get_ipython.im_self.colors
+    try:
+        def_colors = get_ipython.im_self.colors
+    except AttributeError:
+        def_colors = get_ipython.__self__.colors
 
 
 class Rpdb(pdb.Pdb):
