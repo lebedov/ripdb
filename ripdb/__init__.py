@@ -111,6 +111,12 @@ def copy_worker(file_from, file_to):
             file_to.flush()
 
 def connect_to_pty(sock):
+    def _multiprocessing_context():
+        try:
+            return multiprocessing.get_context('fork')
+        except (AttributeError, ValueError):
+            return multiprocessing
+
     ptym_fd, ptys_fd = pty.openpty()
     if six.PY3:
         import io
@@ -123,12 +129,16 @@ def connect_to_pty(sock):
         ptys = os.fdopen(ptys_fd, 'r+', 0)
 
     # Setup two processes for copying between socket and master pty.
-    sock_to_ptym = multiprocessing.Process(target=copy_worker,
-                                           args=(sock, ptym))
+    sock_to_ptym = _multiprocessing_context().Process(
+        target=copy_worker,
+        args=(sock, ptym)
+    )
     sock_to_ptym.daemon = True
     sock_to_ptym.start()
-    ptym_to_sock = multiprocessing.Process(target=copy_worker,
-                                           args=(ptym, sock))
+    ptym_to_sock = _multiprocessing_context().Process(
+        target=copy_worker,
+        args=(ptym, sock)
+    )
     ptym_to_sock.daemon = True
     ptym_to_sock.start()
     return ptys
